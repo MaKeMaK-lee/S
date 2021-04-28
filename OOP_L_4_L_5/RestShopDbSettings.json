@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "RestShopDb": "Server=localhost\\SQLEXPRESS;Database=RestShopDataBase;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=15;Encrypt=False;Packet Size=4096"
+  }
+}

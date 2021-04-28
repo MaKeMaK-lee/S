@@ -1,0 +1,158 @@
+﻿@model OOP_L_4_L_5.Managers.Products.CreateOrUpdateProductModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .textleft {
+            text-align: left;
+        }
+
+        body {
+            margin: auto;
+            max-width: 1000px;
+            background-color: bisque;
+            align-content: center;
+            align-items: center;
+        }
+        .cursorhand {
+            cursor: pointer;
+        }
+
+        .unselectable {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        h1 {
+            font-size: 37px;
+            color: saddlebrown;
+        }
+
+        .default {
+            align-self: center;
+            text-align: center;
+            align-content: center;
+        }
+
+        table {
+            margin: auto;
+            border: 2px double darkred;
+        }
+
+        th {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 500px;
+            border: 5px thin black;
+        }
+
+        td {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 960px;
+            border: 1px thin black;
+        }
+
+        tr {
+            border: 2px double darkred;
+        }
+
+        .input {
+            padding: 2px;
+            margin-top: 3px;
+            font-size: 28px;
+            min-height: 30px;
+            min-width: 200px;
+            border: 3px outset darkred;
+            background-color: rgba(255, 255, 255, 0.37);
+            font-family: Impact;
+        }
+
+        .warningmessage {
+            text-align: center;
+            align-self: center;
+            margin: auto;
+            color: darkred;
+            font-size: 30px;
+            font-weight: bold;
+            border: 7px double black;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добавить Товар</title>
+</head>
+<body>
+    <h1 class="default">
+        Добавить Товар
+    </h1>
+    <div class="default">
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>
+                        Цена
+                    </td>
+                    <td>
+                        <input type="number" name="Price" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        В наличии
+                    </td>
+                    <td>
+                        <input type="number" name="CountInStock" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="2">
+                        Продукция
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select style="max-width:500px; background: rgba(0, 0, 0, 0.27); border:1px solid rgba(0, 0, 0, 0.70); font-size:20px; color: black;" name="MatterId">
+                            <option selected style="background: rgba(0, 0, 0, 0.27); border:1px solid rgba(0, 0, 0, 0.70); font-style:italic; font-size:20px; color: black;" value="@Guid.Empty">[Не назначено]</option>
+                            <optgroup label="Аниме">
+                                @foreach (var c in Model.Animes)
+                                {
+                                    <option style="background: rgba(0, 0, 0, 0.27); border:1px solid rgba(0, 0, 0, 0.70); font-size:20px; color: black;" value="@c.Id">@((c.AnimeType + " " + c.EpisodesCount + " Ep. [" + c.Date.Year + "], " + c.Name).Length > 85 ? (c.AnimeType + " " + c.EpisodesCount + " Ep. [" + c.Date.Year + "], " + c.Name).Substring(0, 85) + "..." : (c.AnimeType + " " + c.EpisodesCount + " Ep. [" + c.Date.Year + "], " + c.Name))</option>
+                                }
+                            </optgroup>
+                            <optgroup label="Книги">
+                                @foreach (var c in Model.Books)
+                                {
+                                <option style="background: rgba(0, 0, 0, 0.27); border:1px solid rgba(0, 0, 0, 0.70); font-size:20px; color: black;" value="@c.Id">@((c.Author + ", [" + c.Date.Year + "] " + c.Name).Length > 85 ? (c.Author + ", [" + c.Date.Year + "] " + c.Name).Substring(0, 85) + "..." : (c.Author + ", [" + c.Date.Year + "] " + c.Name))</option>
+                                }
+                            </optgroup>
+                            <optgroup label="Фигурки">
+                                @foreach (var c in Model.Figures)
+                                {
+                                <option style="background: rgba(0, 0, 0, 0.27); border:1px solid rgba(0, 0, 0, 0.70); font-size:20px; color: black;" value="@c.Id">@((c.Source + " - [1 : " + c.Scale + "] " + c.Name).Length > 85 ? (c.Source + " - [1 : " + c.Scale + "] " + c.Name).Substring(0, 85) + "..." : (c.Source + " - [1 : " + c.Scale + "] " + c.Name))</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <a class="input" href="/Product/ProductCatalog">Отмена</a>   <input class="input cursorhand" type="submit" value="Добавить" />
+            </div>
+        }
+    </div>
+    
+
+</body>
+</html>

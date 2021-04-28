@@ -1,0 +1,257 @@
+﻿@model IEnumerable<OOP_L_4_L_5.Storage.Entity.Client>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Список Клиентов</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .textleft {
+            text-align: left;
+        }
+        .cursorhand {
+            cursor: pointer;
+        }
+
+        .unselectable {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        body {
+            margin: auto;
+            background-color: bisque;
+            align-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 37px;
+            color: saddlebrown;
+        }
+
+        .default {
+            align-self: center;
+            text-align: center;
+            align-content: center;
+        }
+
+        table {
+            max-width: 75%;
+            margin: auto;
+            border: 2px double darkred;
+            background-color: darkseagreen;
+            border-spacing: 3px;
+        }
+
+        .headtablebuttons {
+            max-width: 80%;
+            margin: auto;
+            border: none;
+            background-color: rgba(0,0,0,0);
+        }
+
+        .trheader {
+            border: 2px double rgba(0, 0, 0, 0.70);
+        }
+
+        th {
+            padding: 3px;
+            font-size: 24px;
+            border: 1px groove rgba(0, 0, 0, 0.70);
+        }
+
+        td {
+            padding: 2px;
+            font-size: 20px;
+            border: 1px groove rgba(0, 0, 0, 0.70);
+        }
+
+        .input {
+            font-size: 28px;
+            min-height: 30px;
+            min-width: 200px;
+            border: 3px outset black;
+            background-color: rgba(0, 0, 0, 0.37);
+            font-family: Impact;
+        }
+
+        .searchinput {
+            margin: 1px;
+            font-size: 24px;
+            min-width: 110px;
+            border: 1px outset black;
+            background-color: rgba(0, 0, 0, 0.15);
+            font-family: Calibri;
+        }
+
+        .searchinputcheckbox {
+            border: 1px outset black;
+            background-color: rgba(0, 0, 0, 0.15);
+            font-family: Calibri;
+        }
+
+        .tdHEAD {
+            color: black;
+            padding: 3px;
+            font-size: 24px;
+            border: 3px ridge rgba(0, 0, 0, 0.10);
+            background: rgba(255, 252, 198, 0.27);
+        }
+
+        .tableHEAD {
+            background: rgba(0, 0, 0, 0.00);
+            margin: auto;
+            border-spacing: 3px;
+            border: 0px;
+        }
+
+        .HEAD {
+            padding: 3px;
+            background-color: rgba(40, 6, 0, 0.50);
+        }
+
+        .warningmessage {
+            max-width: 80%;
+            text-align: center;
+            align-self: center;
+            margin: auto;
+            color: darkred;
+            font-size: 30px;
+            font-weight: bold;
+            border: 7px double black;
+        }
+    </style>
+    <script type="text/javascript">
+        function deleteThatClient()
+        {
+            return confirm("Bы уверены, что хотите удалить это?\n\n                  ⚠️ВНИМАНИЕ!⚠️\nРазумеется, это также приведёт к удалению всех платёжных данных этого клиента.");
+        }
+    </script>
+</head>
+<body>
+    <div class="HEAD">
+        <table class="tableHEAD">
+            <tr>
+                <td class="tdHEAD">
+                    <a href="/Anime/AnimeCatalog">аниме</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/Book/BookCatalog">книги</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/Figure/FigureCatalog">фигурки</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/PaymentInfo/PaymentInfoCatalog">платёжные данные</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/Client/ClientCatalog">клиенты</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/Product/ProductCatalog">товары</a>
+                </td>
+                <td class="tdHEAD">
+                    <a href="/Order/OrderCatalog">заказы</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <h1 class="default">
+        Список Клиентов
+    </h1>
+    <table class="headtablebuttons">
+        <tr>
+            <td>
+                @using (Html.BeginForm("CreateClient", "Client"))
+                {
+                    <input class="input cursorhand" type="submit" value="Добавить Клиента" />
+                }
+            </td>
+        </tr>
+    </table>
+
+    @if (Model.Count() > 0)
+    {
+        <div class="default">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            id
+                        </th>
+                        <th>
+                            Имя
+                        </th>
+                        <th>
+                            Телефон
+                        </th>
+                        <th>
+                            Адрес эл. почты
+                        </th>
+                        <th>
+                            Платёжные данные
+                        </th>
+                        <th>
+                            🛠
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var m in Model)
+                {
+                    <tr class="trheader">
+                        <td>
+                            @m.Id
+                        </td>
+                        <td>
+                            @m.Name
+                        </td>
+                        <td>
+                            @m.Telephone
+                        </td>
+                        <td>
+                            @m.Email
+                        </td>
+                        <td>
+                            @if (m.PaymentInfos.Count > 0) 
+                            {
+                            <table style="border-spacing:2px; border:0px;">
+                                @foreach (var pm in m.PaymentInfos)
+                                {
+                                    <tr>
+                                        <td style="border: 1px solid rgba(0, 0, 0, 0.70);">
+                                        @pm.Name<br/>
+                                        @pm.CardNumber <span style="font-style:italic">@pm.Cvc</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                            } else
+                            {
+                        <span style="font-style:italic">[Нет платёжных данных]</span>
+                            }
+                        </td>
+                        <td style="min-width:64px;">
+                            <a href="/Client/UpdateClient/@m.Id">✎</a> <a onclick="return deleteThatClient();" href="/Client/DeleteClient/@m.Id">🗑</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="warningmessage">
+            Тутачки ныне пусто!
+        </div>
+    }
+</body>
+</html>

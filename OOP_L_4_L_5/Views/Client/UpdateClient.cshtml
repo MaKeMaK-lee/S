@@ -1,0 +1,204 @@
+﻿@model OOP_L_4_L_5.Storage.Entity.Client
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .textleft {
+            text-align: left;
+        }
+        .cursorhand {
+            cursor: pointer;
+        }
+
+        .unselectable {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        body {
+            margin: auto;
+            max-width: 1000px;
+            background-color: bisque;
+            align-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 37px;
+            color: saddlebrown;
+        }
+
+        .default {
+            align-self: center;
+            text-align: center;
+            align-content: center;
+        }
+
+        table {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: auto;
+            margin-left: auto;
+            border: 2px double darkred;
+        }
+
+        th {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 500px;
+            border: 5px thin black;
+        }
+
+        td {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 960px;
+            border: 1px thin black;
+        }
+
+        tr {
+            border: 2px double darkred;
+        }
+
+        .input {
+            padding: 2px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: auto;
+            margin-left: auto;
+            font-size: 28px;
+            min-height: 30px;
+            min-width: 200px;
+            border: 3px outset darkred;
+            background-color: rgba(255, 255, 255, 0.37);
+            font-family: Impact;
+        }
+
+        .headtablebuttons {
+            max-width: 80%;
+            margin: auto;
+            border: none;
+            background-color: rgba(0,0,0,0);
+        }
+
+        .warningmessage {
+            text-align: center;
+            align-self: center;
+            margin: auto;
+            color: darkred;
+            font-size: 30px;
+            font-weight: bold;
+            border: 7px double black;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Изменить Клиента</title>
+</head>
+<body>
+    <h1 class="default">
+        Изменить Клиента
+    </h1>
+    <div class="default">
+        @using (Html.BeginForm("Update", "Client", FormMethod.Post))
+        {
+            <input type="hidden" value="@Model.Id" name="ClientId" />
+            <table>
+                <tr>
+                    <td>
+                        Имя
+                    </td>
+                    <td>
+                        <input type="text" value="@Model.Name" maxlength="100" name="Name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Телефон
+                    </td>
+                    <td>
+                        <input type="tel" value="@Model.Telephone" maxlength="12" name="Telephone" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Адрес эл. почты
+                    </td>
+                    <td>
+                        <input type="email" value="@Model.Email" maxlength="100" name="Email" />
+                    </td>
+                </tr>
+            </table>
+            @if (Model.PaymentInfos.Count() > 0)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                id
+                            </th>
+                            <th>
+                                Имя держателя карты
+                            </th>
+                            <th>
+                                Номер карты
+                            </th>
+                            <th>
+                                cvc-код
+                            </th>
+                            <th>
+                                🛠
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var m in Model.PaymentInfos)
+                    {
+                        <tr class="trheader">
+                            <td style="border: 1px solid rgba(0, 0, 0, 0.70);">
+                                @m.Id
+                            </td>
+                            <td style="border: 1px solid rgba(0, 0, 0, 0.70);">
+                                @m.Name
+                            </td>
+                            <td style="border: 1px solid rgba(0, 0, 0, 0.70);">
+                                @m.CardNumber
+                            </td>
+                            <td style="border: 1px solid rgba(0, 0, 0, 0.70);">
+                                @m.Cvc
+                            </td>
+                            <td style="border: 1px solid rgba(0, 0, 0, 0.70); min-width:64px;">
+                                <label title="Это находится в разработке. Разработчики сделали бы это, но у них не так много времени. Пожалуйста, воспользуйтесь пока что функиями основного меню.">⚠️✎🗑⚠️</label>
+                                @*<a href="/PaymentInfo/UpdatePaymentInfo/@m.Id">✎</a> <a onclick="return deleteThat();" href="/PaymentInfo/DeletePaymentInfo/@m.Id">🗑</a>*@
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <div class="warningmessage" style="font-size:20px;">
+                    Пока данных нет.
+                </div>
+            }
+            <label class="input" title="Это находится в разработке. Разработчики сделали бы это, но у них не так много времени. Пожалуйста, воспользуйтесь пока что функиями основного меню.">⚠️Добавить платёжные данные⚠️</label>
+            @*<a class="input" style="font-size:20px;" href="/PaymentInfo/CreatePaymentInfo/@Model.Id">Добавить платёжные данные</a>*@
+            <div>
+                <a class="input" href="/Client/ClientCatalog">Отмена</a>   <input class="input cursorhand" type="submit" value="Обновить сведения" />
+            </div>
+        }
+        @using (Html.BeginForm("PreCreatePaymentInfo", "PaymentInfo", FormMethod.Post))
+        { 
+
+        }
+    </div>
+    </body>
+</html>

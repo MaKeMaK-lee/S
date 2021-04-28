@@ -1,0 +1,165 @@
+﻿@model OOP_L_4_L_5.Storage.Entity.Book
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .textleft {
+            text-align:left;
+        }
+        .cursorhand {
+            cursor: pointer;
+        }
+
+        .unselectable {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        body {
+            margin: auto;
+            max-width: 1000px;
+            background-color: bisque;
+            align-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 37px;
+            color: saddlebrown;
+        }
+
+        .default {
+            align-self: center;
+            text-align: center;
+            align-content: center;
+        }
+
+        table {
+            margin: auto;
+            border: 2px double darkred;
+        }
+
+        th {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 500px;
+            border: 5px thin black;
+        }
+
+        td {
+            font-size: 24px;
+            min-width: 200px;
+            max-width: 960px;
+            border: 1px thin black;
+        }
+
+        tr {
+            border: 2px double darkred;
+        }
+
+        .input {
+            padding: 2px;
+            margin-top: 3px;
+            font-size: 28px;
+            min-height: 30px;
+            min-width: 200px;
+            border: 3px outset darkred;
+            background-color: rgba(255, 255, 255, 0.37);
+            font-family: Impact;
+        }
+
+        .warningmessage {
+            text-align: center;
+            align-self: center;
+            margin: auto;
+            color: darkred;
+            font-size: 30px;
+            font-weight: bold;
+            border: 7px double black;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Изменить Книгу</title>
+</head>
+<body>
+    <h1 class="default">
+        Изменить Книгу
+    </h1>
+    <div class="default">
+        @using (Html.BeginForm("Update", "Book", FormMethod.Post))
+        {
+            <input type="hidden" value="@Model.Id" name="BookId" />
+        <table>
+            <tr>
+                <td>
+                    Название
+                </td>
+                <td>
+                    <input type="text" value="@Model.Name" maxlength="500" name="Name" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Дата выхода
+                </td>
+                <td>
+                    <input type="date" value="@(Model.Date.Month<10?"0":"")@(Model.Date.Month<100?"0":"")@(Model.Date.Month<1000?"0":"")@Model.Date.Year-@(Model.Date.Month<10?"0":"")@Model.Date.Month-@(Model.Date.Day<10?"0":"")@Model.Date.Day" name="Date" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Жанр
+                </td>
+                <td class="textleft">
+                    <label class="unselectable cursorhand">@Html.RadioButton("ArtGenre", "Comedy", (Model.Genre == OOP_L_4_L_5.Storage.ArtGenres.Comedy ? true : false))Комедия<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("ArtGenre", "Drama", (Model.Genre == OOP_L_4_L_5.Storage.ArtGenres.Drama ? true : false))Драма<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("ArtGenre", "Romance", (Model.Genre == OOP_L_4_L_5.Storage.ArtGenres.Romance? true : false))Романтика<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("ArtGenre", "Fantasy", (Model.Genre == OOP_L_4_L_5.Storage.ArtGenres.Fantasy? true : false))Фэнтези<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("ArtGenre", "SliceOfLife", (Model.Genre == OOP_L_4_L_5.Storage.ArtGenres.SliceOfLife? true : false))Повседневность</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Автор
+                </td>
+                <td>
+                    <input type="text" maxlength="100" value="@Model.Author" name="Author" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Кол-во страниц
+                </td>
+                <td>
+                    <input type="number" max="100001" value="@Model.PageCount" name="PageCount" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Тип
+                </td>
+                <td class="textleft">
+                    <label class="unselectable cursorhand">@Html.RadioButton("BookType", "LightNovel", (Model.BookType == OOP_L_4_L_5.Storage.BookTypes.LightNovel ? true : false))Ранобэ<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("BookType", "Manga", (Model.BookType == OOP_L_4_L_5.Storage.BookTypes.Manga ? true : false))Манга<br /></label>
+                    <label class="unselectable cursorhand">@Html.RadioButton("BookType", "Other", (Model.BookType == OOP_L_4_L_5.Storage.BookTypes.Other ? true : false))Другой</label>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <a class="input" href="/Book/BookCatalog">Отмена</a>   <input class="input cursorhand" type="submit" value="Обновить сведения" />
+        </div>
+        }
+    </div>
+
+</body>
+</html>
